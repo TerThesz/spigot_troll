@@ -1,0 +1,5 @@
+main: troll.plugin.Main
+name: Troll
+description: Troll plugin
+author: TerThesz
+version: 1.0.0
