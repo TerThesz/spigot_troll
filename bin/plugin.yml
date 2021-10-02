@@ -3,3 +3,13 @@ name: Troll
 description: Troll plugin
 author: TerThesz
 version: 1.0.0
+
+commands:
+  troll:
+    usage: /<command> [argument] [argument]
+    description: Troll someone (use /troll help to list all trolls)
+    permission: troll.troll
+
+permissions:
+  troll.troll:
+    default: op
