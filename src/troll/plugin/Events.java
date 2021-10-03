@@ -7,6 +7,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -28,7 +29,7 @@ public class Events implements Listener {
     Material.ENDER_CHEST, Material.BARREL
   );
 
-  @EventHandler
+  @EventHandler(priority = EventPriority.HIGHEST)
   public void onPlayerMove(PlayerMoveEvent event) {
     Player p = event.getPlayer();
 
@@ -41,20 +42,22 @@ public class Events implements Listener {
     }
   }
 
-  @EventHandler
+  @EventHandler(priority = EventPriority.HIGHEST)
   public void onRightClick(PlayerInteractEvent event) {
     Player p = event.getPlayer();
 
     if (Main.activeTrolls.containsKey(p.getUniqueId()) && Main.activeTrolls.get(p.getUniqueId()).contains("nochest")) {
       if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && CONTAINERS.contains(event.getClickedBlock().getType()))
         event.setCancelled(true);
-    } else if (Main.activeTrolls.containsKey(p.getUniqueId()) && Main.activeTrolls.get(p.getUniqueId()).contains("nobed")) {
-      if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && BEDS.contains(event.getClickedBlock().getType()))
+    } else if (Main.activeTrolls.containsKey(p.getUniqueId()) && Main.activeTrolls.get(p.getUniqueId()).contains("nosleep")) {
+      if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && BEDS.contains(event.getClickedBlock().getType())) {
         event.setCancelled(true);
+        // Action bar message - You may not rest now; There are monsters nearby.
+      }
     }
   }
 
-  @EventHandler
+  @EventHandler(priority = EventPriority.HIGHEST)
   public void onDisconnect(PlayerQuitEvent event) {
     Player p = event.getPlayer();
 

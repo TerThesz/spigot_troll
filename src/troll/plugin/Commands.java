@@ -52,12 +52,12 @@ public class Commands implements CommandExecutor {
           return true;
         }
 
-        if (args[2] != "enable" || args[2] != "disable") {
+        if (!args[2].equalsIgnoreCase("enable") && !args[2].equalsIgnoreCase("disable") ) {
           sender.sendMessage("§cWrong keyword. Use \"enable\" or \"disable\".");
           return true;
         }
 
-        if (args[2] == "enable")
+        if (args[2].equalsIgnoreCase("enable"))
           enable = true;
         
         if (!enable) {
@@ -67,9 +67,13 @@ public class Commands implements CommandExecutor {
           }
 
           Main.activeTrolls.get(p.getUniqueId()).remove(trollName);
+
+          sender.sendMessage("§aTroll successfully disabled.");
         } else {
-          if (activeTrolls == null)
-            Main.activeTrolls.put(p.getUniqueId(), Arrays.asList(new String[] {}));
+          if (activeTrolls == null) {
+            Main.activeTrolls.put(p.getUniqueId(), new ArrayList<String>());
+            activeTrolls = Main.activeTrolls.get(p.getUniqueId());
+          }
 
           if (activeTrolls.contains(trollName)) {
             sender.sendMessage("§cThis troll is already enabled for this player.");
@@ -77,6 +81,8 @@ public class Commands implements CommandExecutor {
           }
 
           Main.activeTrolls.get(p.getUniqueId()).add(trollName);
+
+          sender.sendMessage("§aTroll successfully enabled.");
         }
 
         return true;
